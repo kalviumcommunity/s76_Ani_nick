@@ -1,0 +1,23 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "AniNick is a web application that showcases the strangest, funniest, and most unusual nicknames from anime series. The project aims to provide a fun platform for anime fans to explore, learn about, and contribute their own favorite weird nicknames from various anime.",
+  "homepage": "https://github.com/kalviumcommunity/s76_Ani_nick#readme",
+  "bugs": {
+    "url": "https://github.com/kalviumcommunity/s76_Ani_nick/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalviumcommunity/s76_Ani_nick.git"
+  },
+  "license": "ISC",
+  "author": "balaji",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
