@@ -12,5 +12,8 @@ const connectDatabase = () => {
       process.exit(1); // Exit process to avoid running with an invalid DB connection
     });
 };
+const getConnection = () => {
+  return mongoose.connection.readyState===1?"connected":"disconnected";
+};
 
-module.exports = connectDatabase;
+module.exports = { connectDatabase, getConnection };
