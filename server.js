@@ -1,23 +1,20 @@
-require('dotenv').config(); 
-// const getConnection = require('./database');
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
+const { connectDatabase } = require("./database"); // Only connectDatabase is needed
+// const router = require("./routes");
 
-const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
-const dotenv =require("dotenv");
-const { connectDatabase, getConnection } = require('./database');
 
+// Middleware
+app.use(express.json());
+app.use(cors());
+
+// Connect to Database
 connectDatabase();
+// Use Routes
+app.use("/api", require("./routes"));
 
-app.get('/ping', (req, res) => {
-    res.send('Pong!');
-});
-
-app.get('/', (req, res) => {
-    console.log(getConnection());
-    res.send(`Database is ${getConnection()}`);
-});
-
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-});
+// Server Listening
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));

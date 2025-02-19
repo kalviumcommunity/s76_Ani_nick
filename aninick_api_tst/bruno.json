@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "aninick_api_tst",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

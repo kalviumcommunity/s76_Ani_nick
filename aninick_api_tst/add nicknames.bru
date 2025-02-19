@@ -1,0 +1,25 @@
+meta {
+  name: add nicknames
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5000/api/nicknames
+  body: json
+  auth: none
+}
+
+headers {
+  : 
+}
+
+body:json {
+  {
+    "nickname": "Straw Hat",
+    "character": "Monkey D. Luffy",
+    "anime": "One Piece",
+    "description": "Refers to his iconic straw hat given to him by Shanks."
+  }
+  
+}
