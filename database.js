@@ -1,19 +1,18 @@
 const mongoose = require("mongoose");
-
-const connectDatabase = () => {
-  mongoose.connect(process.env.DB_URL)
-    .then((data) => {
-      console.log(
-        `MongoDB connected with server: ${data.connection.host}`
-      );
-    })
-    .catch((err) => {
-      console.error(`Database connection failed: ${err.message}`);
-      process.exit(1); // Exit process to avoid running with an invalid DB connection
+// const dotenv=require("dotenv");
+// require(dotenv.config());
+const connectDatabase = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      dbName: "ASAP_DB", // Explicitly set the database name
     });
-};
-const getConnection = () => {
-  return mongoose.connection.readyState===1?"connected":"disconnected";
+    console.log("Connected to MongoDB (ASAP_DB)");
+  } catch (error) {
+    console.error("MongoDB Connection Failed:", error);
+    process.exit(1);
+  }
 };
 
-module.exports = { connectDatabase, getConnection };
+module.exports = { connectDatabase };
