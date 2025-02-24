@@ -1,0 +1,35 @@
+@import "tailwindcss";
+body {
+  overflow-x: hidden;
+}
+
+@keyframes comeFromTop {
+    0% {
+      transform: translateY(-200px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes flyOut {
+    0% {
+      transform: translateX(0) rotate(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(300px) rotate(45deg);
+      opacity: 0;
+    }
+  }
+  
+  .animate-image {
+    animation: comeFromTop 1s ease-out forwards;
+  }
+  
+  .animate-image.fly-out {
+    animation: flyOut 1s ease-in forwards;
+  }
+  
