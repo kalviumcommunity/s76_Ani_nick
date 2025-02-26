@@ -5,6 +5,7 @@ import AnimatedKakashi from '../components/Animatedkakashi';
 import AnimatedSection from '../components/Animateddiv';
 import Animatedichigo from '../components/Animatedichigo';
 import { Github, Instagram, Linkedin } from 'lucide-react';
+
 export const Landing = () => {
   return (
     <div className="overflow-x-hidden">
