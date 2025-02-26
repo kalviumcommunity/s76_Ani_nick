@@ -1,10 +1,30 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+
+const loadingGifPath = '/narutorun.gif';
+
+const Main = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 10000);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <img src={loadingGifPath} alt="Loading..." className="w-60 h-60" />
+      </div>
+    );
+  }
+
+  return <App />;
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Main />);
