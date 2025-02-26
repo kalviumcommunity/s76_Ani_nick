@@ -47,5 +47,7 @@ Contributions are welcome! To contribute:
 - Push to your fork and submit a pull request.
 
 ## Deployed Link:
-
+### backend:
 https://s76-ani-nick.onrender.com/
+### frontend:
+https://aninick-brc.pages.dev/
