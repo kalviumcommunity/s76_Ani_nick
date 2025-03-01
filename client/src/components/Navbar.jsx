@@ -46,9 +46,9 @@ const Navbar = () => {
   };
 
   return (
-    <div className='p-5 justify-between bg-black/40 fixed z-10 text-white  flex h-20 w-[100%] '>
+    <div className='p-5 justify-between bg-black/40 fixed z-50 text-white  flex h-20 w-[100%] '>
       <Link to='/home'>
-      <img src="AniNick.png" alt="logo" className='h-[20px] hover:scale-110 w-[90px]' />
+      <img src="/AniNick.png" alt="logo" className='h-[20px] hover:scale-110 w-[90px]' />
       </Link>
       
       <input
