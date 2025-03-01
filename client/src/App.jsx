@@ -14,6 +14,8 @@ function App() {
       <Route path='/home' element={ <Home/>}/>
       <Route path='/explore' element={<Explore/>}/>
       <Route path='/create' element={<Create/>}/>
+      <Route path="/create/:id" element={<Create />} />
+      
       
 
     </Routes>
