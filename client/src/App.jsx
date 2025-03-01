@@ -1,6 +1,7 @@
 import {Home} from './pages/Home'
 import { Landing } from './pages/Landing'
 import { Explore } from './pages/Explore'
+import  Create  from './pages/Create'
 import { Route,BrowserRouter,Routes } from 'react-router-dom'
 function App() {
   
@@ -12,6 +13,8 @@ function App() {
       <Route path='/' element={ <Landing/>}/>
       <Route path='/home' element={ <Home/>}/>
       <Route path='/explore' element={<Explore/>}/>
+      <Route path='/create' element={<Create/>}/>
+      
 
     </Routes>
     </BrowserRouter>
