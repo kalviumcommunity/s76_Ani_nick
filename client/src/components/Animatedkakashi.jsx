@@ -7,7 +7,7 @@ const AnimatedKakashi = () => {
   return (
     <motion.img 
       src="kakashi.png" 
-      className='h-170 mt-70 w-60 hover:scale-105 z-10 absolute'
+      className='h-[100%]  ml-[1%] w-[15%] hover:scale-105 z-10 absolute'
       alt="Kakashi" 
       initial={{ x: -200, opacity: 0 }} 
  

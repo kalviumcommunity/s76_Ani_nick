@@ -47,7 +47,7 @@ const ScrollingDivs = () => {
 
   return (
     <div 
-      className='z-20 absolute flex flex-col hover:border-none cursor-pointer hover:scale-105 items-center justify-center h-[500px] w-[800px] top-500  left-[55%] transform -translate-x-1/2 bg-black/60 text-white backdrop-blur-m p-[50px] rounded-3xl shadow-2xl border border-gray-200/20 overflow-hidden'
+      className='z-20 p-[10%]  absolute flex flex-col hover:border-none cursor-pointer hover:scale-105 items-center justify-center h-[100%] gap-2 w-[50%] top-500  left-[55%] transform -translate-x-1/2 bg-black/60 text-white backdrop-blur-m  rounded-3xl shadow-2xl border border-gray-200/20 overflow-hidden'
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
