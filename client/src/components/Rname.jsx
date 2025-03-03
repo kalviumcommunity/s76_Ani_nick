@@ -8,7 +8,7 @@ const Rname = () => {
   useEffect(() => {
     const fetchNicknames = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/nicknames");
+        const response = await axios.get("https://s76-ani-nick-1.onrender.com/api/nicknames");
         setNicknames(response.data);
       } catch (error) {
         console.error("Error fetching nicknames:", error);

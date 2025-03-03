@@ -9,10 +9,10 @@ const Navbar = () => {
   const [allNicknames, setAllNicknames] = useState([]);
 
   useEffect(() => {
-    // Fetch all nicknames once and store them
+  
     const fetchNicknames = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/nicknames");
+        const response = await axios.get("https://s76-ani-nick-1.onrender.com/api/nicknames");
         setAllNicknames(response.data);
       } catch (error) {
         console.error("Error fetching nicknames:", error);
@@ -22,12 +22,10 @@ const Navbar = () => {
     fetchNicknames();
   }, []);
 
-  // Handle search input
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
 
-    // Filter nicknames based on search query
     if (value.trim() === "") {
       setSuggestions([]);
     } else {
@@ -38,11 +36,10 @@ const Navbar = () => {
     }
   };
 
-  // When a suggestion is clicked
   const handleSelect = (nickname) => {
     setSearchQuery(nickname);
-    setSuggestions([]); // Hide suggestions
-    onSelect(nickname); // Send selected nickname to parent
+    setSuggestions([]); 
+    onSelect(nickname); 
   };
 
   return (
