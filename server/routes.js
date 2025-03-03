@@ -10,6 +10,21 @@ const nicknameSchema = Joi.object({
   anime: Joi.string().min(3).max(100).required(),
   description: Joi.string().min(10).max(500).required(),
 });
+router.get("/nicknames/user/:created_by", async (req, res) => {
+  try {
+    const nicknames = await NicknameModel.find({ created_by: req.params.created_by });
+
+    if (nicknames.length === 0) {
+      return res.status(404).json({ message: "No nicknames found for this user" });
+    }
+
+    res.status(200).json(nicknames);
+  } catch (error) {
+    console.error("Error fetching nicknames:", error);
+    res.status(500).json({ message: "Error fetching nicknames", error: error.message });
+  }
+});
+
 
 router.get("/nicknames", async (req, res) => {
   try {
@@ -40,17 +55,22 @@ router.get("/nicknames/:id", async (req, res) => {
 
 router.post("/nicknames", async (req, res) => {
   try {
-    const { error } = nicknameSchema.validate(req.body);
-    if (error) {
-      return res.status(400).json({ message: "Validation failed", errors: error.details });
+    const { nickname, character, anime, description, created_by } = req.body;
+
+    if (!nickname || !character || !anime || !description || !created_by) {
+      return res.status(400).json({ message: "All fields are required" });
     }
-    const newNickname = new NicknameModel(req.body);
+
+    const newNickname = new NicknameModel({ nickname, character, anime, description, created_by });
     await newNickname.save();
+
     res.status(201).json({ message: "Nickname added successfully", nickname: newNickname });
   } catch (error) {
+    console.error("Error adding nickname:", error);
     res.status(500).json({ message: "Error adding nickname", error: error.message });
   }
 });
+
 
 router.put("/nicknames/:id", async (req, res) => {
   try {
