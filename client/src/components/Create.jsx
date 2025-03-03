@@ -19,7 +19,7 @@ export const Createc = () => {
 
   useEffect(() => {
     if (isEdit) {
-      axios.get(`http://localhost:5000/api/nicknames/${id}`)
+      axios.get(`https://s76-ani-nick-1.onrender.com/api/nicknames/${id}`)
         .then((response) => {
           setFormData(response.data);
         })
@@ -27,31 +27,29 @@ export const Createc = () => {
     }
   }, [id, isEdit]);
 
-  // Force refresh if coming from edit mode
   useEffect(() => {
     if (location.state?.refresh) {
       window.location.reload();
     }
   }, [location]);
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submit
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isEdit) {
-        await axios.put(`http://localhost:5000/api/nicknames/${id}`, formData);
+        await axios.put(`https://s76-ani-nick-1.onrender.com/api/nicknames/${id}`, formData);
         alert("Nickname updated successfully!");
       } else {
-        await axios.post("http://localhost:5000/api/nicknames", formData);
+        await axios.post("https://s76-ani-nick-1.onrender.com/api/nicknames", formData);
         setMessage("Nickname added successfully!");
         setFormData({ nickname: "", character: "", anime: "", description: "" });
       }
-      navigate("/explore", { state: { refresh: true } }); // ✅ Navigate after success
+      navigate("/explore", { state: { refresh: true } });
     } catch (error) {
       setMessage("Error adding/updating nickname!");
       console.error("Error:", error);

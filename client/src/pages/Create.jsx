@@ -1,5 +1,5 @@
 import React from "react";
-import { Createc } from "../components/Create"; // Importing the fixed component
+import { Createc } from "../components/Create"; 
 import Navbar from "../components/Navbar";
 
 const Create = () => {

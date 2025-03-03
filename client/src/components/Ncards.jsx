@@ -11,21 +11,21 @@ const GridComponent = () => {
   useEffect(() => {
     const fetchNicknames = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/nicknames");
+        const response = await axios.get("https://s76-ani-nick-1.onrender.com/api/nicknames");
         setNicknames(response.data);
       } catch (error) {
         console.error("Error fetching nicknames:", error);
       }
     };
     fetchNicknames();
-  }, [location]); // ✅ Trigger refetch when navigating back
+  }, [location]);
   const handleEdit = (id) => {
-    navigate(`/create/${id}`, { replace: true });  // ✅ Prevents history loop
+    navigate(`/create/${id}`, { replace: true });  
   };
   
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/nicknames/${id}`);
+      const response = await axios.delete(`https://s76-ani-nick-1.onrender.com/api/nicknames/${id}`);
       if (response.status === 200) {
         alert("Nickname deleted successfully!");
         setNicknames((prevNicknames) => prevNicknames.filter((nickname) => nickname._id !== id));

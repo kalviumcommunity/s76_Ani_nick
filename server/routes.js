@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const NicknameModel = require("./models/Nickname"); // Import the model
-
-// ✅ Get all nicknames
+const NicknameModel = require("./models/Nickname");
 router.get("/nicknames", async (req, res) => {
   try {
     const nicknames = await NicknameModel.find({});
@@ -13,12 +11,11 @@ router.get("/nicknames", async (req, res) => {
 
     res.status(200).json(nicknames);
   } catch (error) {
-    console.error("❌ Error fetching nicknames:", error);
+    console.error("Error fetching nicknames:", error);
     res.status(500).json({ message: "Error fetching nicknames", error: error.message });
   }
 });
 
-// ✅ Get a specific nickname by ID
 router.get("/nicknames/:id", async (req, res) => {
   try {
     const nickname = await NicknameModel.findById(req.params.id);
@@ -27,12 +24,11 @@ router.get("/nicknames/:id", async (req, res) => {
     }
     res.status(200).json(nickname);
   } catch (error) {
-    console.error("❌ Error fetching nickname:", error);
+    console.error("Error fetching nickname:", error);
     res.status(500).json({ message: "Error fetching nickname", error: error.message });
   }
 });
 
-// ✅ Add a new nickname
 router.post("/nicknames", async (req, res) => {
   try {
     const { nickname, character, anime, description } = req.body;
@@ -46,12 +42,11 @@ router.post("/nicknames", async (req, res) => {
 
     res.status(201).json({ message: "Nickname added successfully", nickname: newNickname });
   } catch (error) {
-    console.error("❌ Error adding nickname:", error);
+    console.error("Error adding nickname:", error);
     res.status(500).json({ message: "Error adding nickname", error: error.message });
   }
 });
 
-// ✅ Update an existing nickname
 router.put("/nicknames/:id", async (req, res) => {
   try {
     const { nickname, character, anime, description } = req.body;
@@ -68,12 +63,11 @@ router.put("/nicknames/:id", async (req, res) => {
 
     res.status(200).json({ message: "Nickname updated successfully", nickname: updatedNickname });
   } catch (error) {
-    console.error("❌ Error updating nickname:", error);
+    console.error("Error updating nickname:", error);
     res.status(500).json({ message: "Error updating nickname", error: error.message });
   }
 });
 
-// ✅ Delete a nickname
 router.delete("/nicknames/:id", async (req, res) => {
   try {
     const deletedNickname = await NicknameModel.findByIdAndDelete(req.params.id);
@@ -83,7 +77,7 @@ router.delete("/nicknames/:id", async (req, res) => {
 
     res.status(200).json({ message: "Nickname deleted successfully" });
   } catch (error) {
-    console.error("❌ Error deleting nickname:", error);
+    console.error("Error deleting nickname:", error);
     res.status(500).json({ message: "Error deleting nickname", error: error.message });
   }
 });
