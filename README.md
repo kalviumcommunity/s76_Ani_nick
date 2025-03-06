@@ -50,4 +50,4 @@ Contributions are welcome! To contribute:
 ### backend:
 https://s76-ani-nick-1.onrender.com/
 ### frontend:
-https://s76-ani-nick.pages.dev/
+https://ani-nick.pages.dev/
