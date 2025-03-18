@@ -11,6 +11,37 @@ const nicknameSchema = Joi.object({
   anime: Joi.string().min(3).max(100).required(),
   description: Joi.string().min(10).max(500).required(),
 });
+
+
+router.post('/login', (req, res) => {
+  const { username } = req.body;
+
+  if (!username) {
+      return res.status(400).json({ message: 'Username is required' });
+  }
+
+  // Set the cookie with the username
+  res.cookie('username', username, {
+      httpOnly: true,  // Prevents XSS attacks
+      secure: process.env.NODE_ENV === 'production',  // Use secure cookies in production
+      maxAge: 24 * 60 * 60 * 1000  // 1 day expiration
+  });
+
+  res.status(200).json({ message: 'Login successful', username });
+});
+
+// Logout endpoint
+router.post('/logout', (req, res) => {
+  // Clear the username cookie
+  res.clearCookie('username', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production'
+  });
+
+  res.status(200).json({ message: 'Logout successful' });
+});
+
+
 router.get("/users", async (req, res) => {
   try {
       const users = await getUsers();
@@ -73,7 +104,6 @@ router.post("/nicknames", async (req, res) => {
     res.status(500).json({ message: "Error adding nickname", error: error.message });
   }
 });
-
 
 router.put("/nicknames/:id", async (req, res) => {
   try {
