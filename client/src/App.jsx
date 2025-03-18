@@ -1,5 +1,5 @@
 import {Home} from './pages/Home'
-import { Landing } from './pages/Landing'
+import  {Landing}  from './pages/Landing'
 import { Explore } from './pages/Explore'
 import  Create  from './pages/Create'
 import { Route,BrowserRouter,Routes } from 'react-router-dom'
@@ -25,4 +25,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
