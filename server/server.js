@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const { connectDatabase } = require("./database"); // Use PostgreSQL pool
+const { connectDatabase } = require("./database"); // Use MongoDB
 
 const app = express();
 
