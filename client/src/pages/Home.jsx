@@ -15,7 +15,7 @@ export const Home = () => {
 
     <img src="sololev1.png" className='h-200 hover:scale-110 hover:animate-pulse' alt="" />
     <div className='text-white'>
-      <h1 className='text-[#FF7B00] text-7xl font-bold hover:scale-110'>Get a Nicknames</h1>
+      <h1 className='text-[#FF7B00] text-7xl p-5 font-bold hover:scale-110'>Get a Nickname</h1>
       <Rname/>
     <img src="Ellipse 4.png" className='absolute right-[18%] opacity-45 animate-pulse' alt="" />
     </div>
