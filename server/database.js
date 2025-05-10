@@ -1,27 +1,8 @@
-const { Pool } = require("pg");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
 dotenv.config();
 
-// PostgreSQL Connection
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, // Required for Render
-  },
-});
-
-// Check PostgreSQL connection
-pool.connect()
-  .then((client) => {
-    console.log("✅ Connected to PostgreSQL");
-    client.release();
-  })
-  .catch((err) => {
-    console.error("❌ PostgreSQL Connection Failed:", err);
-    process.exit(1);
-  });
 
 // MongoDB Connection
 const connectDatabase = async () => {
@@ -38,4 +19,4 @@ const connectDatabase = async () => {
   }
 };
 
-module.exports = { connectDatabase, pool };
+module.exports = { connectDatabase};

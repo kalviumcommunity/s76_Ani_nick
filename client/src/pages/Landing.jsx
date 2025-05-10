@@ -5,6 +5,7 @@ import AnimatedKakashi from '../components/Animatedkakashi';
 import AnimatedSection from '../components/Animateddiv';
 import Animatedichigo from '../components/Animatedichigo';
 import { Github, Instagram, Linkedin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const Landing = () => {
   return (
@@ -32,10 +33,13 @@ export const Landing = () => {
 
 
 
-        <div className=' cursor-pointer hover:scale-3d text-[#FF7B00]  ml-[85%] mr-[20%] fixed shadow-5 flex gap-5  font-bold text-2xl top-[4%] z-10'>
-        <h2 className="hover:scale-110 hover:text-white">login</h2>
-        <h2 className="hover:scale-110 hover:text-white">Signup</h2>
-        
+        <div className='cursor-pointer hover:scale-3d text-[#FF7B00] ml-[85%] mr-[20%] fixed shadow-5 flex gap-5 font-bold text-2xl top-[4%] z-10'>
+          <Link to="/login">
+            <h2 className="hover:scale-110 hover:text-white">Login</h2>
+          </Link>
+          <Link to="/signup">
+            <h2 className="hover:scale-110 hover:text-white">Signup</h2>
+          </Link>
         </div>
         
         <div className='p-[10%] flex'>

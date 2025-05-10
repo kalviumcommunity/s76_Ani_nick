@@ -1,15 +1,21 @@
 import React from 'react'
 import { Explore } from '../pages/Explore';
-import { Link } from 'react-router-dom';
-import { useState,useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [allNicknames, setAllNicknames] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-  
+    // Check if user is logged in
+    const user = JSON.parse(localStorage.getItem('user'));
+    setIsLoggedIn(!!user && user.isLoggedIn);
+    
     const fetchNicknames = async () => {
       try {
         const response = await axios.get("https://s76-ani-nick-1.onrender.com/api/nicknames");
@@ -39,13 +45,29 @@ const Navbar = () => {
   const handleSelect = (nickname) => {
     setSearchQuery(nickname);
     setSuggestions([]); 
-    onSelect(nickname); 
+    // Remove onSelect as it's not defined
+    // onSelect(nickname); 
+  };
+
+  const handleLogout = async () => {
+    try {
+      // Call the backend logout endpoint
+      await axios.post('https://s76-ani-nick-1.onrender.com/api/logout');
+      
+      // Clear the user info from localStorage
+      localStorage.removeItem('user');
+      
+      // Redirect to landing page
+      navigate('/');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (
-    <div className='p-5 justify-between bg-black/40 fixed z-50 text-white  flex h-20 w-[100%] '>
+    <div className='p-5 justify-between bg-black/40 fixed z-50 text-white flex h-20 w-[100%] '>
       <Link to='/home'>
-      <img src="/AniNick.png" alt="logo" className='h-[20px] hover:scale-110 w-[90px]' />
+        <img src="/AniNick.png" alt="logo" className='h-[20px] hover:scale-110 w-[90px]' />
       </Link>
       
       <input
@@ -67,25 +89,34 @@ const Navbar = () => {
             >
               {item.nickname}
             </li>
-            
           ))}
         </ul>
       )}
-      <div className='flex gap-10 '>
-<Link to='/explore'>
-<div  className='h-10 w-35  text-center pt-1 font-medium text-2xl  hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'>
-  Explore
-</div>
-</Link>
-<Link to='/create'>
-<div className='h-10 w-45  rounded-sm text-center pt-1 font-medium text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110 '>
-  Submit your's
-</div>
-</Link>
-</div>
       
+      <div className='flex gap-10'>
+        <Link to='/explore'>
+          <div className='h-10 w-35 text-center pt-1 font-medium text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'>
+            Explore
+          </div>
+        </Link>
+        <Link to='/create'>
+          <div className='h-10 w-45 rounded-sm text-center pt-1 font-medium text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'>
+            Submit your's
+          </div>
+        </Link>
+        
+        {/* Logout Button */}
+        {isLoggedIn && (
+          <div 
+            onClick={handleLogout} 
+            className='h-10 w-35 text-center pt-1 font-medium text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'
+          >
+            Logout
+          </div>
+        )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Navbar;
