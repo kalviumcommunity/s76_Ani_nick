@@ -6,7 +6,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-
+const loadingGifPath = '/narutorun.gif';
 // Protected route component - redirects to login if not authenticated
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = JSON.parse(localStorage.getItem('user'))?.isLoggedIn || false;
