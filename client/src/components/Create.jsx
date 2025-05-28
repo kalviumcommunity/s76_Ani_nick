@@ -134,9 +134,11 @@ export const Createc = () => {
       console.log("Cleaned form data:", cleanedFormData);
       
       const response = await method(apiUrl, cleanedFormData, {
+
+        withCredentials: true, // Important: to include cookies in the request
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.username}`
+          'Content-Type': 'application/json'
+          // No need to add Authorization header, the JWT is in the cookie
         }
       });
       

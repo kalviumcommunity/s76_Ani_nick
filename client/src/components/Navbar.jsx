@@ -51,8 +51,10 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      // Call the backend logout endpoint
-      await axios.post('https://s76-ani-nick-1.onrender.com/api/logout');
+      // Call the backend logout endpoint with credentials to allow cookie access
+      await axios.post('https://s76-ani-nick-1.onrender.com/api/logout', {}, {
+        withCredentials: true 
+      });
       
       // Clear the user info from localStorage
       localStorage.removeItem('user');
