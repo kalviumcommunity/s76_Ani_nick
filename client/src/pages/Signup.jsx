@@ -39,11 +39,13 @@ const Signup = () => {
     
     setLoading(true);
     try {
-      // Using the new signup endpoint
+      // Using the new signup endpoint with JWT
       const response = await axios.post('https://s76-ani-nick-1.onrender.com/api/signup', {
         username: formData.username,
         email: formData.email,
         password: formData.password
+      }, {
+        withCredentials: true // Important: To allow cookies to be set
       });
       
       // Store user info in localStorage (but not the password for security)

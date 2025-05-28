@@ -2,9 +2,13 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const jwt = require("jsonwebtoken"); 
 const { getUsers } = require("./models/User");
 const NicknameModel = require("./models/Nickname");
 const MongoUser = require("./models/MongoUser");
+
+// Secret key for JWT
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const nicknameSchema = Joi.object({
   nickname: Joi.string().min(3).max(50).required(),
@@ -12,6 +16,33 @@ const nicknameSchema = Joi.object({
   anime: Joi.string().min(3).max(100).required(),
   description: Joi.string().min(10).max(500).required(),
 });
+
+// Middleware to verify JWT token
+const verifyToken = (req, res, next) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.status(401).json({ message: "Authentication required" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    console.error("Token verification error:", error);
+    res.status(401).json({ message: "Invalid or expired token" });
+  }
+};
+
+// Generate JWT token function
+const generateToken = (userId, username) => {
+  return jwt.sign(
+    { id: userId, username },
+    JWT_SECRET,
+    { expiresIn: '24h' }
+  );
+};
 
 // Signup endpoint
 router.post('/signup', async (req, res) => {
@@ -37,11 +68,14 @@ router.post('/signup', async (req, res) => {
 
     await newUser.save();
 
-    // Set cookie
-    res.cookie('username', username, {
+    // Generate JWT token
+    const token = generateToken(newUser._id, username);
+
+    // Set JWT token in cookie
+    res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
     });
 
     res.status(201).json({ 
@@ -76,11 +110,14 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
 
-    // Set cookie
-    res.cookie('username', username, {
+    // Generate JWT token
+    const token = generateToken(user._id, username);
+
+    // Set JWT token in cookie
+    res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
     });
 
     res.status(200).json({ message: 'Login successful', username });
@@ -93,8 +130,8 @@ router.post('/login', async (req, res) => {
 
 // Logout endpoint
 router.post('/logout', (req, res) => {
-  // Clear the username cookie
-  res.clearCookie('username', {
+  // Clear the token cookie
+  res.clearCookie('token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production'
   });
@@ -102,6 +139,10 @@ router.post('/logout', (req, res) => {
   res.status(200).json({ message: 'Logout successful' });
 });
 
+// Protected route example
+router.get('/protected', verifyToken, (req, res) => {
+  res.json({ message: 'This is a protected route', user: req.user });
+});
 
 router.get("/users", async (req, res) => {
   try {
@@ -156,11 +197,10 @@ router.get("/nicknames/:id", async (req, res) => {
   }
 });
 
-// Update the POST /nicknames route to better handle authorization
-router.post("/nicknames", async (req, res) => {
+// Update the POST /nicknames route to use token verification
+router.post("/nicknames", verifyToken, async (req, res) => {
   try {
     console.log("Received nickname creation request:", req.body);
-    console.log("Headers:", req.headers);
     
     const { nickname, character, anime, description } = req.body;
     
@@ -169,24 +209,11 @@ router.post("/nicknames", async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
     
-    // Get username from authorization header
-    const authHeader = req.headers.authorization;
-    console.log("Auth header:", authHeader);
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ message: "Authentication required" });
-    }
-    
-    const username = authHeader.split(' ')[1];
-    console.log("Extracted username:", username);
-    
-    if (!username) {
-      return res.status(401).json({ message: "Invalid authentication credentials" });
-    }
+    // User is now available from the token verification middleware
+    const username = req.user.username;
     
     // Find the user by username
     const user = await MongoUser.findOne({ username });
-    console.log("Found user:", user ? "Yes" : "No");
     
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -198,7 +225,7 @@ router.post("/nicknames", async (req, res) => {
       character, 
       anime, 
       description, 
-      created_by: user._id  // Set the user ID as created_by
+      created_by: user._id
     });
     
     const savedNickname = await newNickname.save();
@@ -214,9 +241,8 @@ router.post("/nicknames", async (req, res) => {
   }
 });
 
-// Update the PUT endpoint to handle authentication and check created_by
-
-router.put("/nicknames/:id", async (req, res) => {
+// Update the PUT endpoint to use token verification
+router.put("/nicknames/:id", verifyToken, async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ message: "Invalid ID format" });
@@ -230,18 +256,8 @@ router.put("/nicknames/:id", async (req, res) => {
       return res.status(404).json({ message: "Nickname not found" });
     }
     
-    // Get username from authorization header
-    const authHeader = req.headers.authorization;
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ message: "Authentication required" });
-    }
-    
-    const username = authHeader.split(' ')[1];
-    
-    if (!username) {
-      return res.status(401).json({ message: "Invalid authentication credentials" });
-    }
+    // User is now available from the token verification middleware
+    const username = req.user.username;
     
     // Find the user by username
     const user = await MongoUser.findOne({ username });
@@ -256,7 +272,7 @@ router.put("/nicknames/:id", async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
     
-    // Check field lengths instead of using Joi
+    // Check field lengths
     if (nickname.length < 3 || nickname.length > 50) {
       return res.status(400).json({ message: "Nickname must be between 3 and 50 characters" });
     }
