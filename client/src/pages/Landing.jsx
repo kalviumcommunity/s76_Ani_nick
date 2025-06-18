@@ -6,16 +6,16 @@ import AnimatedSection from '../components/Animateddiv';
 import Animatedichigo from '../components/Animatedichigo';
 import { Github, Instagram, Linkedin } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 export const Landing = () => {
   return (
     <div className="overflow-x-hidden">
     <div className='bg-[#171742] flex-col  h-[100%]'>
-        <img src="/Ellipse 2.png" className="w-full  h-50 backdrop-blur" alt="" />
+        <img src="/Ellipse 2.png" draggable="false" className="w-full  h-50 backdrop-blur" alt="" />
         <motion.img 
   src="goku.png" 
-  className='absolute z-0 hover:scale-105 flex hover:z-40 top-0 '
+  className='absolute z-0 hover:scale-105 flex top-0 '
   alt=""
+  draggable="false"
   initial={{ y: -200, opacity: 0 }}
   animate={{ y: [0, -20, 0], opacity: 1 }}
   transition={{
@@ -33,7 +33,7 @@ export const Landing = () => {
 
 
 
-        <div className='cursor-pointer hover:scale-3d text-[#FF7B00] ml-[85%] mr-[20%] fixed shadow-5 flex gap-5 font-bold text-2xl top-[4%] z-10'>
+        <div className='cursor-pointer hover:scale-3d text-[#FF7B00] fixed p-3 sm:p-4 md:p-5 flex gap-2 sm:gap-4 md:gap-5 font-bold text-lg sm:text-xl md:text-2xl top-[4%] right-[5%] sm:right-[5%] md:right-[5%] z-30'>
           <Link to="/login">
             <h2 className="hover:scale-110 hover:text-white">Login</h2>
           </Link>
@@ -49,7 +49,9 @@ export const Landing = () => {
 
         <img src="Ellipse 4.png" className='absolute top-[25%] animate-pulse' alt="" />
         </div>
+      <div className='h-[500px]'>
 
+      </div>
         <div className='flex pt-[1%] gap-1'>
 
         <AnimatedKakashi/>
@@ -81,9 +83,10 @@ export const Landing = () => {
       </div>
 
         <img src="Ellipse 4.png" className='absolute  right-[80%]' alt="" />
+       
 <div className='flex'>
 
-        <div className='flex pt-220 text-white'>
+        <div className='flex pt-520 text-white'>
             <Animatedichigo/>
             <div className="overflow-hidden w-full h-full absolute">
 
@@ -91,7 +94,7 @@ export const Landing = () => {
     <motion.img
       src="image 4.png"
       alt="gojo"
-      className="top-450 hover:scale-105 absolute ml-[70%] hover:z-30 "
+      className="top-600 hover:scale-105 absolute ml-[72%] hover:z-30 "
       animate={{ 
         y: [0, 70, 0],
         rotate: [0, 11, -14, 0] 
@@ -106,9 +109,9 @@ export const Landing = () => {
 
             <ScrollingDivs/>    
       </div>
-        <img src="Ellipse 4.png" className='absolute top-478  animate-pulse left-100' alt="" />
+        <img src="Ellipse 4.png" className='absolute top-278  animate-pulse left-100' alt="" />
         </div>
-        <div className='text-white flex-col mt-[10%]'>
+        <div className='text-white flex-col mt-0'>
             <h1 className='font-bold text-8xl pt-40 ml-85 mt-20 '>Ready To <span className='text-[#FF7B00]'>Dive In</span>?</h1>
             <h2 className='font-light text-4xl z-10 pl-50 pt-20  animate-pulse'>Join <span className='text-[#FF7B00]'> AniNick </span>today and start discovering the weirdest anime nicknames!</h2>
            
