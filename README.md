@@ -1,5 +1,3 @@
-# S76_Aini_nick
-
 # AniNick
 
 ## Project Overview
