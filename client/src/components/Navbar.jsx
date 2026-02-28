@@ -51,9 +51,9 @@ const Navbar = () => {
   };
 
   return (
-    <div className='p-5 justify-between bg-black/40 fixed z-50 text-white flex h-20 w-[100%] '>
+    <div className='px-3 md:px-5 justify-between bg-black/40 fixed z-50 text-white flex items-center h-14 md:h-20 w-full'>
       <Link to='/home'>
-        <img src="/AniNick.png" alt="logo" className='h-[20px] hover:scale-110 w-[90px]' />
+        <img src="/AniNick.png" alt="logo" className='h-[16px] md:h-[20px] hover:scale-110 w-[72px] md:w-[90px]' />
       </Link>
 
       <input
@@ -61,12 +61,12 @@ const Navbar = () => {
         placeholder="Search nicknames..."
         value={searchQuery}
         onChange={handleSearch}
-        className="p-2 rounded bg-gray-800 text-white w-[300px]"
+        className="hidden md:block p-2 rounded bg-gray-800 text-white w-[200px] lg:w-[300px]"
       />
 
       {/* Suggestions Dropdown */}
       {suggestions.length > 0 && (
-        <ul className="absolute top-16 bg-black/60 text-center w-[300px] ml-121 mt-5 rounded-lg shadow-lg text-white">
+        <ul className="absolute top-14 md:top-16 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto bg-black/60 text-center w-[280px] md:w-[300px] rounded-lg shadow-lg text-white z-50">
           {suggestions.map((item) => (
             <li
               key={item._id}
@@ -79,22 +79,25 @@ const Navbar = () => {
         </ul>
       )}
 
-      <div className='flex gap-10'>
+      <div className='flex gap-3 md:gap-8 items-center'>
         <Link to='/explore'>
-          <div className='h-10 w-35 text-center pt-1 font-medium text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'>
+          <div className='font-medium text-base md:text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'>
             Explore
           </div>
         </Link>
         <Link to='/create'>
-          <div className='h-10 w-45 rounded-sm text-center pt-1 font-medium text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'>
-            Submit your's
+          <div className='font-medium text-base md:text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110 hidden sm:block'>
+            Submit
+          </div>
+          <div className='font-medium text-base md:text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110 sm:hidden'>
+            +
           </div>
         </Link>
 
         {currentUser && (
           <div
             onClick={handleLogout}
-            className='h-10 w-35 text-center pt-1 font-medium text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'
+            className='font-medium text-base md:text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'
           >
             Logout
           </div>
