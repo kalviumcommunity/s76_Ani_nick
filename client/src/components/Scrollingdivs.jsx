@@ -47,11 +47,11 @@ const ScrollingDivs = () => {
 
   return (
     <div 
-      className='z-20 p-[5%]  absolute flex flex-col hover:border-none cursor-pointer hover:scale-105 items-center justify-center h-[100%] gap-2 w-[50%] top-700  left-[55%] transform -translate-x-1/2 bg-black/60 text-white backdrop-blur-m  rounded-3xl shadow-2xl border border-gray-200/20 overflow-hidden'
+      className='z-20 p-6 md:p-[5%] relative md:absolute flex flex-col hover:border-none cursor-pointer items-center justify-center gap-2 w-full md:w-[50%] md:top-700 md:left-[55%] md:transform md:-translate-x-1/2 bg-black/60 text-white backdrop-blur rounded-3xl shadow-2xl border border-gray-200/20 overflow-hidden'
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <h1 className='text-6xl font-bold mb-6 text-center hover:scale-105'>
+      <h1 className='text-3xl sm:text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-center hover:scale-105'>
         Why You’ll <span className='text-[#FF0000]'>Love</span> AniNick
       </h1>
       <div className="relative w-full h-[250px] flex justify-center items-center text-center">
@@ -60,8 +60,8 @@ const ScrollingDivs = () => {
             key={index}
             className={`absolute hover:scale-110 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
           >
-            <h2 className='font-bold text-[#FF7B00] text-4xl mb-2'>{msg.heading}</h2>
-            <p className='text-2xl font-light'>{msg.content}</p>
+            <h2 className='font-bold text-[#FF7B00] text-xl md:text-4xl mb-2 px-4'>{msg.heading}</h2>
+            <p className='text-base md:text-2xl font-light px-4'>{msg.content}</p>
           </div>
         ))}
       </div>
