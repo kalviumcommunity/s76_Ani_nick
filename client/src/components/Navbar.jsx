@@ -1,65 +1,49 @@
-import React from 'react'
-import { Explore } from '../pages/Explore';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import api from '../api/client';
 
 const Navbar = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const { currentUser, logout } = useAuth();
+  const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [allNicknames, setAllNicknames] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is logged in
-    const user = JSON.parse(localStorage.getItem('user'));
-    setIsLoggedIn(!!user && user.isLoggedIn);
-    
     const fetchNicknames = async () => {
       try {
-        const response = await axios.get("https://s76-ani-nick-1.onrender.com/api/nicknames");
+        const response = await api.get('/nicknames');
         setAllNicknames(response.data);
       } catch (error) {
-        console.error("Error fetching nicknames:", error);
+        console.error('Error fetching nicknames for search:', error);
       }
     };
-
     fetchNicknames();
   }, []);
 
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
-
-    if (value.trim() === "") {
+    if (value.trim() === '') {
       setSuggestions([]);
     } else {
-      const filtered = allNicknames.filter((item) =>
-        item.nickname.toLowerCase().includes(value.toLowerCase())
+      setSuggestions(
+        allNicknames.filter((item) =>
+          item.nickname.toLowerCase().includes(value.toLowerCase())
+        )
       );
-      setSuggestions(filtered);
     }
   };
 
   const handleSelect = (nickname) => {
     setSearchQuery(nickname);
-    setSuggestions([]); 
-    // Remove onSelect as it's not defined
-    // onSelect(nickname); 
+    setSuggestions([]);
   };
 
   const handleLogout = async () => {
     try {
-      // Call the backend logout endpoint with credentials to allow cookie access
-      await axios.post('https://s76-ani-nick-1.onrender.com/api/logout', {}, {
-        withCredentials: true 
-      });
-      
-      // Clear the user info from localStorage
-      localStorage.removeItem('user');
-      
-      // Redirect to landing page
+      await logout();
       navigate('/');
     } catch (error) {
       console.error('Logout error:', error);
@@ -71,7 +55,7 @@ const Navbar = () => {
       <Link to='/home'>
         <img src="/AniNick.png" alt="logo" className='h-[20px] hover:scale-110 w-[90px]' />
       </Link>
-      
+
       <input
         type="search"
         placeholder="Search nicknames..."
@@ -94,7 +78,7 @@ const Navbar = () => {
           ))}
         </ul>
       )}
-      
+
       <div className='flex gap-10'>
         <Link to='/explore'>
           <div className='h-10 w-35 text-center pt-1 font-medium text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'>
@@ -106,11 +90,10 @@ const Navbar = () => {
             Submit your's
           </div>
         </Link>
-        
-        {/* Logout Button */}
-        {isLoggedIn && (
-          <div 
-            onClick={handleLogout} 
+
+        {currentUser && (
+          <div
+            onClick={handleLogout}
             className='h-10 w-35 text-center pt-1 font-medium text-2xl hover:text-white text-[#FF7B00] cursor-pointer hover:scale-110'
           >
             Logout

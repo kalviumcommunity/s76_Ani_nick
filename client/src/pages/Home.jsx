@@ -13,13 +13,13 @@ export const Home = () => {
 
     <div className='flex justify-between'>
 
-    <img src="sololev1.png" className='h-200 hover:scale-110 hover:animate-pulse' alt="" />
+    <img src="sololev1.png" loading="lazy" className='h-200 hover:scale-110 hover:animate-pulse' alt="" />
     <div className='text-white'>
       <h1 className='text-[#FF7B00] text-7xl p-5 font-bold hover:scale-110'>Get a Nickname</h1>
       <Rname/>
-    <img src="Ellipse 4.png" className='absolute right-[18%] opacity-45 animate-pulse' alt="" />
+    <img src="Ellipse 4.png" loading="lazy" className='absolute right-[18%] opacity-45 animate-pulse' alt="" />
     </div>
-    <img src="sololev2.png" className='h-200 hover:scale-110' alt="" />
+    <img src="sololev2.png" loading="lazy" className='h-200 hover:scale-110' alt="" />
 
     </div>
     <div className='h-[100%] pb-[5%] pt-[2%] flex-col bg-black hover:bg-white/80 text-white hover:text-black  z-30'>
@@ -50,7 +50,7 @@ export const Home = () => {
       <Github size={32} />
     </a>
       </div>
-        <img src="image 7.png" className='ml-[70%]  h-70' alt="" />
+        <img src="image 7.png" loading="lazy" className='ml-[70%]  h-70' alt="" />
       <div className=' text-2xl flex gap-7 pl-[3%] font-lg '>
         <h1 className='hover:text-sky-500 cursor-pointer'>By:</h1>
         <h1 className='hover:scale-105 hover:text-sky-600 cursor-pointer'>Balaji R</h1>
