@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/client';
 
 const Rname = () => {
   const [nicknames, setNicknames] = useState([]);
@@ -8,7 +8,7 @@ const Rname = () => {
   useEffect(() => {
     const fetchNicknames = async () => {
       try {
-        const response = await axios.get("https://s76-ani-nick-1.onrender.com/api/nicknames");
+        const response = await api.get('/nicknames');
         setNicknames(response.data);
       } catch (error) {
         console.error("Error fetching nicknames:", error);
