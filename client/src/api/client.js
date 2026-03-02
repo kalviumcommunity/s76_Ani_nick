@@ -7,7 +7,11 @@ import { auth } from "../firebase/config";
  * as an Authorization header — no need to add it manually in each component.
  */
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://s76-ani-nick-1.onrender.com/api",
+  baseURL:
+    import.meta.env.VITE_API_URL ||
+    (import.meta.env.DEV
+      ? "http://localhost:5000/api"
+      : "https://s76-ani-nick-1.onrender.com/api"),
 });
 
 // Request interceptor: attach the Firebase ID token before every request

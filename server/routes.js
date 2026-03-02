@@ -133,4 +133,80 @@ router.delete("/nicknames/:id", verifyFirebaseToken, async (req, res) => {
   }
 });
 
+// ─── Likes ───────────────────────────────────────────────────────────────────
+
+// POST toggle like on a nickname
+router.post("/nicknames/:id/like", verifyFirebaseToken, async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+    const nickname = await NicknameModel.findById(req.params.id);
+    if (!nickname) return res.status(404).json({ message: "Nickname not found" });
+
+    const uid = req.user.uid;
+    const alreadyLiked = nickname.likes.includes(uid);
+    if (alreadyLiked) {
+      nickname.likes = nickname.likes.filter((id) => id !== uid);
+    } else {
+      nickname.likes.push(uid);
+    }
+    await nickname.save();
+    res.json({ likes: nickname.likes, liked: !alreadyLiked });
+  } catch (error) {
+    res.status(500).json({ message: "Error toggling like", error: error.message });
+  }
+});
+
+// ─── Comments ────────────────────────────────────────────────────────────────
+
+// POST add comment
+router.post("/nicknames/:id/comment", verifyFirebaseToken, async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+    const { text } = req.body;
+    if (!text || text.trim().length === 0) {
+      return res.status(400).json({ message: "Comment text is required" });
+    }
+    if (text.length > 300) {
+      return res.status(400).json({ message: "Comment must be 300 characters or less" });
+    }
+
+    const nickname = await NicknameModel.findById(req.params.id);
+    if (!nickname) return res.status(404).json({ message: "Nickname not found" });
+
+    nickname.comments.push({ uid: req.user.uid, name: req.user.name, text: text.trim() });
+    await nickname.save();
+    res.json({ comments: nickname.comments });
+  } catch (error) {
+    res.status(500).json({ message: "Error adding comment", error: error.message });
+  }
+});
+
+// DELETE remove own comment
+router.delete("/nicknames/:id/comment/:commentId", verifyFirebaseToken, async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+    const nickname = await NicknameModel.findById(req.params.id);
+    if (!nickname) return res.status(404).json({ message: "Nickname not found" });
+
+    const comment = nickname.comments.id(req.params.commentId);
+    if (!comment) return res.status(404).json({ message: "Comment not found" });
+    if (comment.uid !== req.user.uid) {
+      return res.status(403).json({ message: "You can only delete your own comments" });
+    }
+
+    comment.deleteOne();
+    await nickname.save();
+    res.json({ comments: nickname.comments });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting comment", error: error.message });
+  }
+});
+
 module.exports = router;
+

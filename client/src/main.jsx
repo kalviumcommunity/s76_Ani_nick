@@ -7,6 +7,8 @@ import { Explore } from './pages/Explore';
 import Create from './pages/Create';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Profile from './pages/Profile';
+import NicknameDetail from './pages/NicknameDetail';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './index.css';
 
@@ -40,6 +42,8 @@ const AppRoutes = () => (
       <Route path="/explore" element={<ProtectedRoute><Explore /></ProtectedRoute>} />
       <Route path="/create" element={<ProtectedRoute><Create /></ProtectedRoute>} />
       <Route path="/create/:id" element={<ProtectedRoute><Create /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path="/nickname/:id" element={<ProtectedRoute><NicknameDetail /></ProtectedRoute>} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

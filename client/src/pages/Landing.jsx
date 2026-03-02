@@ -13,7 +13,7 @@ export const Landing = () => {
         <img src="/Ellipse 2.png" draggable="false" className="w-full  h-50 backdrop-blur" alt="" />
         <motion.img 
   src="goku.png" 
-  className='hidden sm:block absolute z-0 hover:scale-105 flex top-0 '
+  className='hidden sm:block absolute z-0 hover:scale-105 top-0 '
   alt=""
   draggable="false"
   initial={{ y: -200, opacity: 0 }}
@@ -45,7 +45,7 @@ export const Landing = () => {
         <div className='px-4 md:p-[10%] flex flex-col md:flex-row min-h-[60vh] md:min-h-0 items-center md:items-start justify-center md:justify-start pt-16 md:pt-0'>
         <AnimatedSection/>
         
-        <img src="image 1.png" loading="lazy" className='hidden md:block ml-[85%] hover:scale-110 pt-[4%] flex animate' alt="" />
+        <img src="image 1.png" loading="lazy" className='hidden md:block ml-[85%] hover:scale-110 pt-[4%] animate' alt="" />
 
         <img src="Ellipse 4.png" loading="lazy" className='hidden md:block absolute top-[25%] animate-pulse' alt="" />
         </div>
