@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 
+const commentSchema = new mongoose.Schema({
+  uid: { type: String, required: true },
+  name: { type: String, default: "Anonymous" },
+  text: { type: String, required: true, maxlength: 300 },
+}, { timestamps: true });
+
 const nicknameSchema = new mongoose.Schema({
   nickname: { type: String, unique: true, required: true },
   character: { type: String, required: true },
@@ -14,6 +20,16 @@ const nicknameSchema = new mongoose.Schema({
   created_by_name: {
     type: String,
     default: "Anonymous",
+  },
+  // Array of Firebase UIDs who liked this nickname
+  likes: {
+    type: [String],
+    default: [],
+  },
+  // Embedded comments
+  comments: {
+    type: [commentSchema],
+    default: [],
   },
 }, {
   timestamps: true, // adds createdAt and updatedAt

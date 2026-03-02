@@ -26,30 +26,35 @@ const Rname = () => {
   };
 
   return (
-    <div>
-      <div className=' p-6'>
-        
-        
-        {selectedNickname && (
-          <div 
-            key={selectedNickname._id} 
-            className="bg-black/60  py-10 rounded-2xl text-white text-center flex-col shadow-lg p-6 hover:scale-105 hover:animate-pulse hover:shadow-2xl transition-shadow duration-300"
+    <div className="relative z-20">
+      <div className='p-4 md:p-6'>
+        {selectedNickname ? (
+          <div
+            key={selectedNickname._id}
+            className="bg-black/60 rounded-2xl text-white text-center shadow-xl border border-gray-700/30 p-5 md:p-6 transition-all duration-300"
           >
-            <h2 className="text-2xl font-bold text-center text-[#FF7B00] mb-2">{selectedNickname.nickname}</h2>
-            <hr className="text-[#FF7B00]" />
-            <p className="text-white py-3"><span className="font-bold">Character: </span>{selectedNickname.character}</p>
-            <p className="py-3"><span className="font-bold">Anime: </span>{selectedNickname.anime}</p>
-            <p className="py-3">{selectedNickname.description}</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-[#FF7B00] mb-2 break-words">{selectedNickname.nickname}</h2>
+            <hr className="border-[#FF7B00]/40" />
+            <p className="text-white py-2"><span className="font-bold text-gray-300">Character: </span>{selectedNickname.character}</p>
+            <p className="py-2"><span className="font-bold text-gray-300">Anime: </span>{selectedNickname.anime}</p>
+            <p className="py-2 text-gray-300 leading-relaxed">{selectedNickname.description}</p>
+          </div>
+        ) : (
+          <div className="bg-black/40 border border-gray-700/30 rounded-2xl text-gray-400 text-center py-12">
+            Click generate to reveal a random anime nickname.
           </div>
         )}
       </div>
 
-      <button 
-        onClick={generateNickname} 
-        className=' cursor-pointer hover:scale-105 text-[white] bg-[#FF7B00] hover:text-[#FF7B00] font-bold rounded-sm ml-[35%] p-2 mt-4 h-[28%] w-[30%] hover:bg-white transition duration-300'
-      >
-        Generate
-      </button>
+      <div className="flex justify-center relative z-30">
+        <button
+          type="button"
+          onClick={generateNickname}
+          className='cursor-pointer hover:scale-105 text-white bg-[#FF7B00] font-bold rounded-md px-8 py-2.5 hover:bg-[#d66a00] transition duration-300'
+        >
+          Generate Random Nickname
+        </button>
+      </div>
     </div>
   );
 };
